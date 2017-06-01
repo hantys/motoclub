@@ -16,7 +16,20 @@
     <nav>
       <div class="nav-wrapper">
         <%= link_to "Eleição Moto clube", root_path, class: "brand-logo" %>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <a href="/" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        <ul class="right hide-on-med-and-down">
+          <li><%= link_to "Eleição", root_path  %></li>
+          <li><%= link_to "Minha sugestão", new_election_path  %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Editar Perfil", edit_user_registration_path  %></li>
+            <li><%= link_to "<i class='material-icons md-24 md-dark'>power_settings_new</i>".html_safe, destroy_user_session_path, :method => Devise.sign_out_via  %></li>
+          <% else %>
+            <li><%= link_to "<i class='material-icons md-24 md-light'>power_settings_new</i>".html_safe, new_user_session_path  %></li>
+          <% end %>
+        </ul>
+
+        <ul class="side-nav" id="mobile-demo">
           <li><%= link_to "Eleição", root_path  %></li>
           <li><%= link_to "Minha sugestão", new_election_path  %></li>
           <% if user_signed_in? %>
