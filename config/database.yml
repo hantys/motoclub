@@ -21,3 +21,4 @@ production:
   database: motoclub_production
   username: motoclub
   password: <%= ENV['MOTOCLUB_DATABASE_PASSWORD'] %>
+
