@@ -1,0 +1,20 @@
+
+<p>
+  <strong>Name:</strong>
+  <%= @election.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @election.user.name %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @election.text %>
+</p>
+<% if user_signed_in? %>
+<%= link_to 'Edit', edit_election_path(@election) if @election.user == current_user %>
+<% end %>
+|
+<%= link_to 'Back', elections_path %>

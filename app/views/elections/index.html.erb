@@ -1,0 +1,34 @@
+<h1>Elections</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sugestão de nome</th>
+      <th>Membro</th>
+      <th>Porque do nome</th>
+      <% if user_signed_in? %>
+        <th colspan="3"></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @elections.each do |election| %>
+      <tr>
+        <td><%= election.name %></td>
+        <td><%= election.user.name %></td>
+        <td><%= election.text %></td>
+        <% if user_signed_in? %>
+          <% if election.user == current_user %>
+            <td><%= link_to mi.visibility.md_24, election %></td>
+            <td><%= link_to mi.mode_edit.md_24, edit_election_path(election) %></td>
+            <td><%= link_to mi.delete_forever.md_24, election, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

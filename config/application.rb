@@ -21,11 +21,14 @@ module Motoclub
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    config.time_zone = 'Brasilia'
 
-    # Don't generate system test files.
+    config.i18n.enforce_available_locales = false
+    config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.i18n.default_locale = :'pt-BR'
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
     config.generators.system_tests = nil
   end
 end

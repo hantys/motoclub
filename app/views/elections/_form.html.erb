@@ -1,0 +1,21 @@
+<div class="row">
+  <%= simple_form_for(@election, :html => { :class => "col s12" }) do |f| %>
+    <%= f.error_notification %>
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.input :name, label: false, wrapper: false, input_html: { class: 'validate' } %>
+          <label for="election_name">Nome do clube</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <%= f.input :text, label: false, wrapper: false, input_html: { class: 'materialize-textarea' } %>
+          <label for="election_text">Porque do nome?</label>
+        </div>
+      </div>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+</div>

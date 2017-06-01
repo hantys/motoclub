@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Motoclub</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>Motoclub</title>
+  <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <meta name='viewport' content="width=device-width, height=device-height" >
 
-  <body>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+  <header>
+
+    <nav>
+      <div class="nav-wrapper">
+        <%= link_to "Eleição Moto clube", root_path, class: "brand-logo" %>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><%= link_to "Eleição", root_path  %></li>
+          <li><%= link_to "Minha sugestão", new_election_path  %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Editar Perfil", edit_user_registration_path  %></li>
+            <li><%= link_to "<i class='material-icons md-24 md-dark'>power_settings_new</i>".html_safe, destroy_user_session_path, :method => Devise.sign_out_via  %></li>
+          <% else %>
+            <li><%= link_to "<i class='material-icons md-24 md-light'>power_settings_new</i>".html_safe, new_user_session_path  %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class='container'>
+    <% if notice.present? %>
+      <div class="card-panel lime accent-1"><%= notice %></div>
+    <% end %>
+
     <%= yield %>
-  </body>
+
+  </main>
+
+
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+        © 2014 Copyright Text
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
