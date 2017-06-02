@@ -1,8 +1,12 @@
-<h1>Elections</h1>
-
-<table>
+<h1>Eleiçao</h1>
+<% if user_signed_in? %>
+  <legend>Você tem <%= current_user.qnt_votes %> votos</legend>
+<% end %>
+<table >
   <thead>
-    <tr>
+    <tr >
+      <th></th>
+      <th>Qnt votos</th>
       <th>Sugestão de nome</th>
       <th>Membro</th>
       <th>Porque do nome</th>
@@ -12,17 +16,33 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody style="text-align: center">
     <% @elections.each do |election| %>
       <tr>
+        <td style="text-align: center"><%= link_to 'Votar', vote_path(election), method: :post, class: 'btn' if !user_signed_in? || current_user.qnt_votes >= 1 %></td>
+        <td><b> <%= election.votes.count %> </b></td>
         <td><%= election.name %></td>
         <td><%= election.user.name %></td>
-        <td><%= election.text %></td>
+        <td>
+          <!-- Modal Trigger -->
+          <a href="#modal_<%= election.id %>"><%= mi.description.md_36 %></a>
+
+          <!-- Modal Structure -->
+          <div id="modal_<%= election.id %>" class="modal">
+            <div class="modal-content">
+              <h4>Porque do nome</h4>
+              <p><%= election.text %></p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fechar</a>
+            </div>
+          </div>
+        </td>
         <% if user_signed_in? %>
           <% if election.user == current_user %>
-            <td><%= link_to mi.visibility.md_24, election %></td>
-            <td><%= link_to mi.mode_edit.md_24, edit_election_path(election) %></td>
-            <td><%= link_to mi.delete_forever.md_24, election, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%#= link_to mi.visibility.md_24, election %></td>
+            <td><%#= link_to mi.mode_edit.md_24, edit_election_path(election) %></td>
+            <td><%#= link_to mi.delete_forever.md_24, election, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
         <% end %>
       </tr>

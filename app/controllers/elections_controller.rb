@@ -1,5 +1,5 @@
 class ElectionsController < ApplicationController
-  before_action :set_election, only: [:show, :edit, :update, :destroy]
+  before_action :set_election, only: [:vote, :show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   # GET /elections
   # GET /elections.json
@@ -10,6 +10,21 @@ class ElectionsController < ApplicationController
   # GET /elections/1
   # GET /elections/1.json
   def show
+
+  end
+
+  def vote
+    if current_user.qnt_votes <= 0
+      flash[:error] = "Você não tem mais votos."
+    else
+      if Vote.create(user_id: current_user.id, election_id: @election.id)
+        current_user.update(qnt_votes: (current_user.qnt_votes - 1))
+        flash[:success] = "Voto computado com sucesso!"
+      else
+        flash[:error] = "Ocorreu um erro. Tente novamente."
+      end
+    end
+    redirect_to root_path
   end
 
   # GET /elections/new
