@@ -20,7 +20,28 @@
     <% @elections.each do |election| %>
       <tr>
         <td style="text-align: center"><%= link_to 'Votar', vote_path(election), method: :post, class: 'btn' if !user_signed_in? || current_user.qnt_votes >= 1 %></td>
-        <td><b> <%= election.votes.count %> </b></td>
+        <td>
+          <b> <a href="#modal_votes_<%= election.id %>"><%= election.votes.count %> </a></b>
+
+          <!-- Modal Structure -->
+          <div id="modal_votes_<%= election.id %>" class="modal">
+            <div class="modal-content">
+              <h4>Votos</h4>
+              <p>
+                <ul>
+                  <% election.votes.joins(:user).group("users.name").count.each do |key, value| %>
+                    <li>
+                      <%= key %>: <%= value %> voto(s)
+                    </li>
+                  <% end %>
+                </ul>
+              </p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fechar</a>
+            </div>
+          </div>
+        </td>
         <td><%= election.name %></td>
         <td><%= election.user.name %></td>
         <td>
